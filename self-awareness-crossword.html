@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Self-Awareness Crossword</title>
+<style>
+  body { 
+    font-family: 'Arial', sans-serif; 
+    background: linear-gradient(to bottom, #f9f9f9, #dfe6e9); 
+    margin: 0; padding: 20px; 
+    text-align: center;
+  }
+  h2 { color: #2c3e50; margin-bottom: 10px; }
+  .cover-image { width: 100%; max-width: 600px; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
+  .crossword { 
+    display: grid; 
+    grid-template-columns: repeat(20, 35px); 
+    grid-gap: 4px; 
+    justify-content: center; 
+    margin-bottom: 20px; 
+  }
+  input { 
+    width: 35px; height: 35px; 
+    text-align: center; 
+    font-size: 18px; 
+    font-weight: bold; 
+    border: 2px solid #3498db; 
+    border-radius: 6px; 
+    background-color: #ecf0f1; 
+    transition: all 0.3s; 
+    text-transform: uppercase;
+  }
+  input.correct { background-color: #2ecc71; color: white; border-color: #27ae60; }
+  input.incorrect { background-color: #e74c3c; color: white; border-color: #c0392b; }
+  input:focus { border-color: #e67e22; outline: none; }
+  .hint { margin: 8px 0; color: #34495e; font-weight: bold; font-size: 16px; }
+  button { 
+    padding: 12px 25px; 
+    background-color: #3498db; 
+    color: white; 
+    border: none; 
+    border-radius: 6px; 
+    font-size: 16px; 
+    cursor: pointer; 
+    margin-bottom: 20px;
+  }
+  button:hover { background-color: #2980b9; }
+  ul { list-style-type: square; margin-left: 20px; text-align: left; display: inline-block; }
+</style>
+</head>
+<body>
+
+<h2>Self-Awareness Crossword</h2>
+<img src="https://images.unsplash.com/photo-1557683316-973673baf926?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080" 
+alt="Self Awareness" class="cover-image">
+
+<p>Fill in the crossword below. Click "Check Answers" to see your results!</p>
+
+<div class="crossword" id="crossword"></div>
+
+<h3>Hints</h3>
+<ul>
+  <li class="hint">Across 1: Your ability to understand your own emotions</li>
+  <li class="hint">Across 3: Understanding how your behavior affects others</li>
+  <li class="hint">Across 5: Being aware of your goals and values</li>
+  <li class="hint">Across 7: Taking responsibility for your actions</li>
+  <li class="hint">Down 2: Being truthful about your strengths and weaknesses</li>
+  <li class="hint">Down 4: Feeling confident in your decisions</li>
+  <li class="hint">Down 6: Recognizing stress triggers</li>
+  <li class="hint">Down 8: Being open to feedback</li>
+</ul>
+
+<button onclick="checkAnswers()">Check Answers</button>
+
+<script>
+// Answers object
+const answers = {
+  'A1': 'EMOTIONALINTELLIGENCE',
+  'A3': 'SOCIALAWARENESS',
+  'A5': 'SELFREFLECTION',
+  'A7': 'ACCOUNTABILITY',
+  'D2': 'HONESTY',
+  'D4': 'SELFCONFIDENCE',
+  'D6': 'MINDFULNESS',
+  'D8': 'RECEPTIVITY'
+};
+
+// Create crossword grid
+const crosswordDiv = document.getElementById('crossword');
+for (let i = 0; i < 15; i++) {
+  for (let j = 0; j < 20; j++) {
+    const input = document.createElement('input');
+    input.id = `cell-${i}-${j}`;
+    input.maxLength = 1;
+    crosswordDiv.appendChild(input);
+  }
+}
+
+// Function to check answers
+function checkAnswers() {
+  for (const key in answers) {
+    const word = answers[key];
+    if (key.startsWith('A')) {
+      const row = parseInt(key.slice(1)) - 1;
+      for (let k = 0; k < word.length; k++) {
+        const cell = document.getElementById(`cell-${row}-${k}`);
+        if (cell.value.toUpperCase() === word[k]) {
+          cell.classList.add('correct');
+          cell.classList.remove('incorrect');
+        } else {
+          cell.classList.add('incorrect');
+          cell.classList.remove('correct');
+        }
+      }
+    } else if (key.startsWith('D')) {
+      const col = parseInt(key.slice(1)) - 1;
+      for (let k = 0; k < word.length; k++) {
+        const cell = document.getElementById(`cell-${k}-${col}`);
+        if (cell.value.toUpperCase() === word[k]) {
+          cell.classList.add('correct');
+          cell.classList.remove('incorrect');
+        } else {
+          cell.classList.add('incorrect');
+          cell.classList.remove('correct');
+        }
+      }
+    }
+  }
+}
+</script>
+
+</body>
+</html>
+
