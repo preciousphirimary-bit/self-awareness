@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Self-Awareness Crossword</title>
+<style>
+  body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; }
+  h2 { color: #2c3e50; }
+  p { font-size: 16px; }
+  .cover-image { width: 100%; max-width: 600px; border-radius: 12px; margin-bottom: 20px; }
+  .crossword { 
+    display: grid; 
+    grid-template-columns: repeat(20, 30px); 
+    grid-gap: 2px; 
+    margin-bottom: 20px; 
+  }
+  input { 
+    width: 30px; 
+    height: 30px;
+    text-transform: uppercase; 
+    text-align: center; 
+    font-weight: bold; 
+    border: 2px solid #3498db;
+    border-radius: 4px;
+    background-color: #ecf0f1;
+    transition: all 0.3s;
+  }
+  input.correct { background-color: #2ecc71; color: white; }
+  input.incorrect { background-color: #e74c3c; color: white; }
+  input:focus { border-color: #e67e22; outline: none; }
+  .hint { margin: 10px 0; color: #34495e; font-weight: bold; }
+  button { 
+    padding: 10px 20px; 
+    background-color: #3498db; 
+    color: white; 
+    border: none; 
+    border-radius: 5px; 
+    font-size: 16px;
+    cursor: pointer;
+  }
+  button:hover { background-color: #2980b9; }
+  ul { list-style-type: square; margin-left: 20px; }
+</style>
+</head>
+<body>
+
+<h2>Self-Awareness Crossword</h2>
+<img src="https://images.unsplash.com/photo-1557683316-973673baf926?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8c2VsZiUyMGF3YXJlbmVzc3xlbnwwfHx8fDE2OTY3NjU1Njg&ixlib=rb-4.0.3&q=80&w=1080" 
+alt="Self Awareness" class="cover-image">
+
+<p>Fill in the crossword below. Click "Check Answers" to see if your responses are correct!</p>
+
+<div class="crossword" id="crossword"></div>
+
+<h3>Hints</h3>
+<ul>
+  <li>Across 1: Your ability to understand your own emotions</li>
+  <li>Across 3: Understanding how your behavior affects others</li>
+  <li>Across 5: Being aware of your goals and values</li>
+  <li>Across 7: Taking responsibility for your actions</li>
+  <li>Down 2: Being truthful about your strengths and weaknesses</li>
+  <li>Down 4: Feeling confident in your decisions</li>
+  <li>Down 6: Recognizing stress triggers</li>
+  <li>Down 8: Being open to feedback</li>
+</ul>
+
+<button onclick="checkAnswers()">Check Answers</button>
+
+<script>
+const answers = {
+  'A1': 'EMOTIONALINTELLIGENCE',
+  'A3': 'SOCIALAWARENESS',
+  'A5': 'SELFREFLECTION',
+  'A7': 'ACCOUNTABILITY',
+  'D2': 'HONESTY',
+  'D4': 'SELFCONFIDENCE',
+  'D6': 'MINDFULNESS',
+  'D8': 'RECEPTIVITY'
+};
+
+// Create crossword grid
+const crosswordDiv = document.getElementById('crossword');
+for (let i=0; i<15; i++) {
+  for (let j=0; j<20; j++) {
+    const input = document.createElement('input');
+    input.id = `cell-${i}-${j}`;
+    input.maxLength = 1;
+    crosswordDiv.appendChild(input);
+  }
+}
+
+// Check answers
+function checkAnswers() {
+  for (const key in answers) {
+    const word = answers[key];
+    if (key.startsWith('A')) {
+      // Across
+      const row = parseInt(key.slice(1));
+      for (let k=0; k<word.length; k++) {
+        const cell = document.getElementById(`cell-${row-1}-${k}`);
+        if (cell.value.toUpperCase() === word[k]) {
+          cell.classList.add('correct');
+          cell.classList.remove('incorrect');
+        } else {
+          cell.classList.add('incorrect');
+          cell.classList.remove('correct');
+        }
+      }
+    } else if (key.startsWith('D')) {
+      // Down
+      const col = parseInt(key.slice(1));
+      for (let k=0; k<word.length; k++) {
+        const cell = document.getElementById(`cell-${k}-${col-1}`);
+        if (cell.value.toUpperCase() === word[k]) {
+          cell.classList.add('correct');
+          cell.classList.remove('incorrect');
+        } else {
+          cell.classList.add('incorrect');
+          cell.classList.remove('correct');
+        }
+      }
+    }
+  }
+}
+</script>
+
+</body>
+</html>
